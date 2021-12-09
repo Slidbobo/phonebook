@@ -120,10 +120,10 @@ const PhoneBook = () => {
   };
 
   const handleAddNewContact = (values, props) => {
-      setContacts([...contacts, values]);
-      props.resetForm();
-      props.setSubmitting(false);
-      handleCloseModal();
+    setContacts([...contacts, values]);
+    props.resetForm();
+    props.setSubmitting(false);
+    handleCloseModal();
   };
 
   const handleUpdateContact = (values, props) => {
@@ -238,7 +238,10 @@ const PhoneBook = () => {
                                   name={`phoneNumbers.${index}.label`}
                                 >
                                   {labelOptions.map((labelOption, index) => (
-                                    <MenuItem value={labelOption.value} key={index}>
+                                    <MenuItem
+                                      value={labelOption.value}
+                                      key={index}
+                                    >
                                       {labelOption.label}
                                     </MenuItem>
                                   ))}
@@ -422,22 +425,24 @@ const PhoneBook = () => {
                   <TableCell>{firstName}</TableCell>
                   <TableCell>{lastName}</TableCell>
                   <TableCell>
-                    {phoneNumbers.map(
-                      ({ id: phoneId, label, number }) => (
-                        <Grid
-                          container
-                          key={
-                            "contact_" + contactId + "phone_number" + phoneId
+                    {phoneNumbers.map(({ id: phoneId, label, number }) => (
+                      <Grid
+                        container
+                        key={"contact_" + contactId + "phone_number" + phoneId}
+                        spacing={2}
+                      >
+                        <Grid item width={75}>
+                          {
+                            labelOptions.reduce((prevLabel, currentLabel) =>
+                              currentLabel.value === label
+                                ? currentLabel
+                                : prevLabel
+                            ).label
                           }
-                          spacing={2}
-                        >
-                          <Grid item width={75}>
-                            {labelOptions.reduce((prevLabel, currentLabel) => currentLabel.value === label ? currentLabel : prevLabel).label}
-                          </Grid>
-                          <Grid item>{number}</Grid>
                         </Grid>
-                      )
-                    )}
+                        <Grid item>{number}</Grid>
+                      </Grid>
+                    ))}
                   </TableCell>
                   <TableCell align="right">
                     <Button onClick={() => handleOpenModalUpdate(contactId)}>
